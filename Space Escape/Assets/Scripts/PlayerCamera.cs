@@ -8,14 +8,14 @@ public class PlayerCamera : MonoBehaviour
 {
     private float xRotation;
     private float yRotation;
-    public float mouseSpeed = 2.0f;
+    public float mouseSpeed = 10.0f;
     public Transform orientation;
 
     private PlayerInputActions playerInputActions;
 
     private void Awake()
     {
-        playerInputActions = GetComponent<PlayerInputActions>();
+        //playerInputActions = GetComponent<PlayerInputActions>();
 
         playerInputActions = new PlayerInputActions();
         playerInputActions.LookActions.Enable();
@@ -23,7 +23,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
