@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class InputSystem : MonoBehaviour
 {
     private Rigidbody playerRB;
-    
+    public Transform orientation;
     private PlayerInput playerInputs;
     private PlayerInputActions playerInputActions;
 
@@ -28,6 +28,11 @@ public class InputSystem : MonoBehaviour
     {
         Vector2 moveDirection = playerInputActions.PlayerActions.Movement.ReadValue<Vector2>();
         this.transform.Translate(new Vector3(moveDirection.x, 0, moveDirection.y) * walkForce * Time.deltaTime);
+
+        //float forward = playerInputActions.PlayerActions.MoveForward.ReadValue<float>();
+        //float right = playerInputActions.PlayerActions.MoveRight.ReadValue<float>();
+        //Vector3 moveDirection = orientation.forward * forward + orientation.right * right;
+        //this.transform.Translate(new Vector3(moveDirection.x, 0, moveDirection.y)); 
     }
 
     public void Jump(InputAction.CallbackContext context)
