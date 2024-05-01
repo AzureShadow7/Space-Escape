@@ -15,8 +15,6 @@ public class PlayerCamera : MonoBehaviour
 
     private void Awake()
     {
-        //playerInputActions = GetComponent<PlayerInputActions>();
-
         playerInputActions = new PlayerInputActions();
         playerInputActions.LookActions.Enable();
     }

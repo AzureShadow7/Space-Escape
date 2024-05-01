@@ -30,7 +30,7 @@ public class InputSystem : MonoBehaviour
         float forward = playerInputActions.PlayerActions.MoveForward.ReadValue<float>();
         float right = playerInputActions.PlayerActions.MoveRight.ReadValue<float>();
 
-        Vector3 moveDirection = transform.right * right + transform.forward * forward;
+        Vector3 moveDirection = transform.right * right * walkForce + transform.forward * forward * walkForce;
         playerRB.velocity = new Vector3(moveDirection.x, playerRB.velocity.y, moveDirection.z);
     }
 
