@@ -26,13 +26,12 @@ public class InputSystem : MonoBehaviour
 
     private void Update()
     {
-        Vector2 moveDirection = playerInputActions.PlayerActions.Movement.ReadValue<Vector2>();
-        this.transform.Translate(new Vector3(moveDirection.x, 0, moveDirection.y) * walkForce * Time.deltaTime);
+        
+        float forward = playerInputActions.PlayerActions.MoveForward.ReadValue<float>();
+        float right = playerInputActions.PlayerActions.MoveRight.ReadValue<float>();
 
-        //float forward = playerInputActions.PlayerActions.MoveForward.ReadValue<float>();
-        //float right = playerInputActions.PlayerActions.MoveRight.ReadValue<float>();
-        //Vector3 moveDirection = orientation.forward * forward + orientation.right * right;
-        //this.transform.Translate(new Vector3(moveDirection.x, 0, moveDirection.y)); 
+        Vector3 moveDirection = transform.right * right + transform.forward * forward;
+        playerRB.velocity = new Vector3(moveDirection.x, playerRB.velocity.y, moveDirection.z);
     }
 
     public void Jump(InputAction.CallbackContext context)
