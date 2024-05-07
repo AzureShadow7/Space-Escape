@@ -224,6 +224,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "SpecialActions",
+            "id": "ab81b79d-2b12-4d34-b468-a28eebac94bc",
+            "actions": [
+                {
+                    "name": "DetectEnemy",
+                    "type": "Button",
+                    "id": "16fd4b1e-3f11-467a-a64b-2d677daf4494",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "37cc0303-957f-4508-8303-58c08248fa79",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "DetectEnemy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

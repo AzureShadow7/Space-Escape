@@ -246,6 +246,34 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""SpecialActions"",
+            ""id"": ""ab81b79d-2b12-4d34-b468-a28eebac94bc"",
+            ""actions"": [
+                {
+                    ""name"": ""DetectEnemy"",
+                    ""type"": ""Button"",
+                    ""id"": ""16fd4b1e-3f11-467a-a64b-2d677daf4494"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""37cc0303-957f-4508-8303-58c08248fa79"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""DetectEnemy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -266,6 +294,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_LookActions = asset.FindActionMap("LookActions", throwIfNotFound: true);
         m_LookActions_MouseX = m_LookActions.FindAction("MouseX", throwIfNotFound: true);
         m_LookActions_MouseY = m_LookActions.FindAction("MouseY", throwIfNotFound: true);
+        // SpecialActions
+        m_SpecialActions = asset.FindActionMap("SpecialActions", throwIfNotFound: true);
+        m_SpecialActions_DetectEnemy = m_SpecialActions.FindAction("DetectEnemy", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -419,6 +450,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         }
     }
     public LookActionsActions @LookActions => new LookActionsActions(this);
+
+    // SpecialActions
+    private readonly InputActionMap m_SpecialActions;
+    private ISpecialActionsActions m_SpecialActionsActionsCallbackInterface;
+    private readonly InputAction m_SpecialActions_DetectEnemy;
+    public struct SpecialActionsActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public SpecialActionsActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @DetectEnemy => m_Wrapper.m_SpecialActions_DetectEnemy;
+        public InputActionMap Get() { return m_Wrapper.m_SpecialActions; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SpecialActionsActions set) { return set.Get(); }
+        public void SetCallbacks(ISpecialActionsActions instance)
+        {
+            if (m_Wrapper.m_SpecialActionsActionsCallbackInterface != null)
+            {
+                @DetectEnemy.started -= m_Wrapper.m_SpecialActionsActionsCallbackInterface.OnDetectEnemy;
+                @DetectEnemy.performed -= m_Wrapper.m_SpecialActionsActionsCallbackInterface.OnDetectEnemy;
+                @DetectEnemy.canceled -= m_Wrapper.m_SpecialActionsActionsCallbackInterface.OnDetectEnemy;
+            }
+            m_Wrapper.m_SpecialActionsActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @DetectEnemy.started += instance.OnDetectEnemy;
+                @DetectEnemy.performed += instance.OnDetectEnemy;
+                @DetectEnemy.canceled += instance.OnDetectEnemy;
+            }
+        }
+    }
+    public SpecialActionsActions @SpecialActions => new SpecialActionsActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -439,5 +503,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     {
         void OnMouseX(InputAction.CallbackContext context);
         void OnMouseY(InputAction.CallbackContext context);
+    }
+    public interface ISpecialActionsActions
+    {
+        void OnDetectEnemy(InputAction.CallbackContext context);
     }
 }
